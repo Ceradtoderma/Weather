@@ -1,27 +1,25 @@
 import requests
 from datetime import datetime
 import locale
+import os
 
 
 locale.setlocale(locale.LC_ALL, "ru")
 API_WEATHER_KEY = 'fc3837d82e69a8bea3f8c2a0f1e68643'
 city = 'Ростов-на-Дону'
 
-def get_param(city, day=0):
+def get_param(weather_data, day):
     """
     :return: Кортеж параметров в виде строк
     """
-    lat, lon = get_coord(city)
-    responce = get_weather_data(lat, lon)
-    weather_data = pars_weather_data(responce)
 
     date = str(weather_data[day]['date'])
-    temp = str(weather_data[day]['temp'])
+    temp = str(round(weather_data[day]['temp'])) + '℃'
     dow = str(weather_data[day]['dow'])
-    descr = str(weather_data[day]['descr'])
-    f_l = str(weather_data[day]['f_l'])
-    cloudy = str(weather_data[day]['cloudy'])
-    preasure = str(weather_data[day]['preasure'])
+    descr = str(weather_data[day]['descr']).replace(' ', '\n').capitalize()
+    f_l = str(round(weather_data[day]['f_l'])) + '℃'
+    cloudy = str(weather_data[day]['cloudy']) + '%'
+    preasure = str(round(weather_data[day]['preasure'] / 1.333)) + '\nмм.рт.ст.'
     ico = str(weather_data[day]['ico'])
 
     param = (date, temp, dow, descr, f_l, cloudy, preasure, ico)
@@ -31,7 +29,9 @@ def get_param(city, day=0):
 
 
 
-def pars_weather_data(responce):
+def pars_weather_data(city):
+    lat, lon = get_coord(city)
+    responce = get_weather_data(lat, lon)
     weather_data = []
     cnt = 0
     for i in responce['daily']:
@@ -75,12 +75,28 @@ def get_coord(city):
     lon = requests.get(url, params=query).json()['coord']['lon']
     return lat, lon
 
+def get_ico(weather_data):
+
+    if os.path.exists('icons') == False:
+        os.mkdir('icons')
+
+    icons = []
+    for j in range(len(weather_data)):
+        icons.append(weather_data[j]['ico'])
+
+    for i in icons:
+        if os.path.exists(f'icons/{i}.png'):
+            continue
+        else:
+            url_ico = f'http://openweathermap.org/img/wn/{i}@2x.png'
+            res = requests.get(url_ico).content
+            with (open(f'icons/{i}.png', 'wb')) as f:
+                f.write(res)
+
 def main():
-    lat, lon = get_coord(city)
-    responce = get_weather_data(lat, lon)
-    weather_data = pars_weather_data(responce)
-    print(get_param(weather_data))
+    weather_data = pars_weather_data(city)
+    get_ico(weather_data)
 
 if __name__ == '__main__':
 
-    print(get_param(city))
+    main()
