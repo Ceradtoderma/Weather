@@ -22,7 +22,12 @@ class Usin(object):
         self.afteraftertomorrow.setGeometry(QtCore.QRect(300, 310, 131, 31))
         self.more = QtWidgets.QPushButton('Подробнее', window)
         self.more.setGeometry(QtCore.QRect(160, 350, 131, 31))
-        self.change_city = QtWidgets.QPushButton('+', window)
+        self.change_city = QtWidgets.QPushButton(u'\u21cc', window)
+
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(14)
+        self.change_city.setFont(font)
         self.change_city.setGeometry(QtCore.QRect(400, 10, 31, 31))
 
         # Лейблы
@@ -81,10 +86,10 @@ class Usin(object):
         self.lbl_feellike.setAlignment(QtCore.Qt.AlignCenter)
         self.gridLayout.addWidget(self.lbl_feellike, 0, 0, 1, 1)
 
-        self.lbl_preasure = QtWidgets.QLabel('Давление', self.layoutWidget1)
-        self.lbl_preasure.setFont(font)
-        self.lbl_preasure.setAlignment(QtCore.Qt.AlignCenter)
-        self.gridLayout.addWidget(self.lbl_preasure, 0, 1, 1, 1)
+        self.lbl_pressure = QtWidgets.QLabel('Давление', self.layoutWidget1)
+        self.lbl_pressure.setFont(font)
+        self.lbl_pressure.setAlignment(QtCore.Qt.AlignCenter)
+        self.gridLayout.addWidget(self.lbl_pressure, 0, 1, 1, 1)
 
         self.lbl_cloudy = QtWidgets.QLabel('Облачность', self.layoutWidget1)
         self.lbl_cloudy.setFont(font)
@@ -96,10 +101,10 @@ class Usin(object):
         self.feel_like.setAlignment(QtCore.Qt.AlignCenter)
         self.gridLayout.addWidget(self.feel_like, 1, 0, 1, 1)
 
-        self.preasure = QtWidgets.QLabel('720 мм.рт.ст', self.layoutWidget1)
-        self.preasure.setFont(font)
-        self.preasure.setAlignment(QtCore.Qt.AlignCenter)
-        self.gridLayout.addWidget(self.preasure, 1, 1, 1, 1)
+        self.pressure = QtWidgets.QLabel('720 мм.рт.ст', self.layoutWidget1)
+        self.pressure.setFont(font)
+        self.pressure.setAlignment(QtCore.Qt.AlignCenter)
+        self.gridLayout.addWidget(self.pressure, 1, 1, 1, 1)
 
         self.cloudy = QtWidgets.QLabel('58%', self.layoutWidget1)
         self.cloudy.setFont(font)
@@ -111,3 +116,4 @@ class Usin(object):
 
         self.gridLayout_more = QtWidgets.QGridLayout(self.layoutWidget_more)
         self.gridLayout_more.setContentsMargins(0, 0, 0, 0)
+

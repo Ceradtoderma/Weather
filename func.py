@@ -19,10 +19,10 @@ def get_param(weather_data, day):
     descr = str(weather_data[day]['descr']).replace(' ', '\n').capitalize()
     f_l = str(round(weather_data[day]['f_l'])) + '℃'
     cloudy = str(weather_data[day]['cloudy']) + '%'
-    preasure = str(round(weather_data[day]['preasure'] / 1.333)) + '\nмм.рт.ст.'
+    pressure = str(round(weather_data[day]['pressure'] / 1.333)) + '\nмм.рт.ст.'
     ico = str(weather_data[day]['ico'])
 
-    param = (date, temp, dow, descr, f_l, cloudy, preasure, ico)
+    param = (date, temp, dow, descr, f_l, cloudy, pressure, ico)
     return param
 
 
@@ -45,7 +45,7 @@ def pars_weather_data(city):
         weather_data[cnt]['descr'] = i['weather'][0]['description']
         weather_data[cnt]['f_l'] = i['feels_like']['day']
         weather_data[cnt]['cloudy'] = i['clouds']
-        weather_data[cnt]['preasure'] = i['pressure']
+        weather_data[cnt]['pressure'] = i['pressure']
         weather_data[cnt]['ico'] = i['weather'][0]['icon']
 
         cnt += 1
