@@ -33,9 +33,7 @@ class Usin(object):
         self.change_city.setGeometry(QtCore.QRect(400, 10, 31, 31))
 
         # Лейблы
-        font = QtGui.QFont()
-        font.setFamily("Verdana")
-        font.setPointSize(14)
+
         self.day_of_week = QtWidgets.QLabel('Понедельник', window)
         self.day_of_week.setGeometry(QtCore.QRect(20, 50, 151, 23))
         self.day_of_week.setFont(font)
@@ -57,7 +55,7 @@ class Usin(object):
         self.gridLayout_2 = QtWidgets.QGridLayout(self.layoutWidget)
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
 
-        self.lbl_temp = QtWidgets.QLabel('Температура\nВоздуха', self.layoutWidget)
+        self.lbl_temp = QtWidgets.QLabel('Температура\nвоздуха', self.layoutWidget)
         self.lbl_temp.setFont(font)
         self.lbl_temp.setAlignment(QtCore.Qt.AlignCenter)
         self.gridLayout_2.addWidget(self.lbl_temp, 0, 0, 1, 1)
@@ -67,8 +65,6 @@ class Usin(object):
         self.Description.setAlignment(QtCore.Qt.AlignCenter)
         self.gridLayout_2.addWidget(self.Description, 0, 2, 1, 1)
         self.Temp = QtWidgets.QLabel('+35', self.layoutWidget)
-        font = QtGui.QFont()
-        font.setFamily("Verdana")
         font.setPointSize(26)
         self.Temp.setFont(font)
         self.Temp.setAlignment(QtCore.Qt.AlignCenter)
@@ -81,8 +77,6 @@ class Usin(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
 
         self.lbl_feellike = QtWidgets.QLabel('Ощущается', self.layoutWidget1)
-        font = QtGui.QFont()
-        font.setFamily("Verdana")
         font.setPointSize(12)
         self.lbl_feellike.setFont(font)
         self.lbl_feellike.setAlignment(QtCore.Qt.AlignCenter)

@@ -13,7 +13,8 @@ class Window(QtWidgets.QMainWindow):
         self.state_resolution = 0
         self.ui = usin.Usin()
         self.ui.setupUI(self)
-        self.weather_data = func.pars_weather_data(self.city)
+
+        self.get_data()
         func.get_ico(self.weather_data)
         self.set_weather()
         self.set_week_weather()
@@ -28,6 +29,16 @@ class Window(QtWidgets.QMainWindow):
         self.ui.change_city.clicked.connect(self.changecity)
 
         self.show()
+
+    def get_data(self):
+        try:
+            self.lat, self.lon = func.get_coord(self.city)
+            self.json_data = func.get_json(self.lat, self.lon)
+            self.weather_data = func.pars_weather_data(self.json_data)
+            return True
+        except:
+            QtWidgets.QMessageBox.warning(self, 'Ошибка', 'Город не найден! Попробуйте другой.')
+            return False
 
     def set_weather(self, day=0):
         """
@@ -98,11 +109,11 @@ class Window(QtWidgets.QMainWindow):
         if ok:
 
             self.city = text
-            self.weather_data = func.pars_weather_data(self.city)
-            self.setWindowTitle(f'{self.city}')
-            func.get_ico(self.weather_data)
-            self.set_weather()
-            self.set_week_weather()
+            if self.get_data():
+                self.setWindowTitle(f'{self.city}')
+                func.get_ico(self.weather_data)
+                self.set_weather()
+                self.set_week_weather()
 
 
 app = QtWidgets.QApplication([])

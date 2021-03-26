@@ -6,11 +6,11 @@ import os
 
 locale.setlocale(locale.LC_ALL, "ru")
 API_WEATHER_KEY = 'fc3837d82e69a8bea3f8c2a0f1e68643'
-# city = 'Ростов-на-Дону'
-city = 'asdasd'
+city = 'Ростов-на-Дону'
 
 def get_param(weather_data, day):
     """
+    Собирает данные на текущий день
     :return: Кортеж параметров в виде строк
     """
     date = str(weather_data[day]['date'])
@@ -26,12 +26,14 @@ def get_param(weather_data, day):
     return param
 
 
-def pars_weather_data(city):
-    lat, lon = get_coord(city)
-    responce = get_weather_data(lat, lon)
+def pars_weather_data(json_data):
+    """
+    Парсит json с данными погоды в питоний словарь
+    :return: dict
+    """
     weather_data = []
     cnt = 0
-    for i in responce['daily']:
+    for i in json_data['daily']:
         dt = i['dt']
         weather_data.append([])
         weather_data[cnt] = {}
@@ -49,7 +51,11 @@ def pars_weather_data(city):
     return weather_data
 
 
-def get_weather_data(lat, lon):
+def get_json(lat, lon):
+    """
+    Забирает с сайта json
+    :return: dict
+    """
     url = 'https://api.openweathermap.org/data/2.5/onecall'
     query = {
         'appid': API_WEATHER_KEY,
@@ -59,28 +65,28 @@ def get_weather_data(lat, lon):
         'units': 'metric',
         'exclude': 'current,minutely,hourly,alerts'
     }
-    responce = requests.get(url, params=query).json()
-    return responce
+    json_data = requests.get(url, params=query).json()
+    return json_data
 
 def get_coord(city):
     """
-    Получает координаты по названию города
+    Получает координаты города по названию
+    :return: tuple (lat, lon)
     """
     query = {'appid': API_WEATHER_KEY,
              'q': city}
     url = 'http://api.openweathermap.org/data/2.5/weather'
     json_data = requests.get(url, params=query).json()
-
-    print(json_data)
-    if json_data['cod'] == '404':
-        print('Ошибка!')
-        # QtWidgets.QMessageBox.warning(self, 'Ошибка', 'Такого города нет')
-
     lat = json_data['coord']['lat']
     lon = json_data['coord']['lon']
     return lat, lon
 
 def get_ico(weather_data):
+    """
+    Проверяет есть ли папка для иконок, и сами иконки,
+    в случае отсутствия, скачивает
+    :return: None
+    """
 
     if os.path.exists('icons') == False:
         os.mkdir('icons')
@@ -99,7 +105,12 @@ def get_ico(weather_data):
                 f.write(res)
 
 def main():
-    weather_data = pars_weather_data(city)
+    """
+    Тестовая
+    """
+    lat, lon = get_coord(city)
+    json_data = get_json(lat, lon)
+    weather_data = pars_weather_data(json_data)
     get_ico(weather_data)
 
 if __name__ == '__main__':
