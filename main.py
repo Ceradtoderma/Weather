@@ -95,10 +95,11 @@ class Window(QtWidgets.QMainWindow):
     def changecity(self):
 
         text, ok = QtWidgets.QInputDialog.getText(self, 'Смена города', 'Введите город:')
-
         if ok:
+
             self.city = text
             self.weather_data = func.pars_weather_data(self.city)
+            self.setWindowTitle(f'{self.city}')
             func.get_ico(self.weather_data)
             self.set_weather()
             self.set_week_weather()

@@ -6,13 +6,13 @@ import os
 
 locale.setlocale(locale.LC_ALL, "ru")
 API_WEATHER_KEY = 'fc3837d82e69a8bea3f8c2a0f1e68643'
-city = 'Ростов-на-Дону'
+# city = 'Ростов-на-Дону'
+city = 'asdasd'
 
 def get_param(weather_data, day):
     """
     :return: Кортеж параметров в виде строк
     """
-
     date = str(weather_data[day]['date'])
     temp = str(round(weather_data[day]['temp'])) + '℃'
     dow = str(weather_data[day]['dow'])
@@ -24,9 +24,6 @@ def get_param(weather_data, day):
 
     param = (date, temp, dow, descr, f_l, cloudy, pressure, ico)
     return param
-
-
-
 
 
 def pars_weather_data(city):
@@ -51,6 +48,7 @@ def pars_weather_data(city):
         cnt += 1
     return weather_data
 
+
 def get_weather_data(lat, lon):
     url = 'https://api.openweathermap.org/data/2.5/onecall'
     query = {
@@ -71,8 +69,15 @@ def get_coord(city):
     query = {'appid': API_WEATHER_KEY,
              'q': city}
     url = 'http://api.openweathermap.org/data/2.5/weather'
-    lat = requests.get(url, params=query).json()['coord']['lat']
-    lon = requests.get(url, params=query).json()['coord']['lon']
+    json_data = requests.get(url, params=query).json()
+
+    print(json_data)
+    if json_data['cod'] == '404':
+        print('Ошибка!')
+        # QtWidgets.QMessageBox.warning(self, 'Ошибка', 'Такого города нет')
+
+    lat = json_data['coord']['lat']
+    lon = json_data['coord']['lon']
     return lat, lon
 
 def get_ico(weather_data):

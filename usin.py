@@ -6,6 +6,8 @@ class Usin(object):
         window.setMinimumSize(QtCore.QSize(450, 381))
         window.setMaximumSize(QtCore.QSize(450, 840))
         window.setWindowTitle('Погода')
+        window.setWindowIcon(QtGui.QIcon('ico.png'))
+
 
         # Фрейм
         self.frame = QtWidgets.QFrame(window)
@@ -20,7 +22,7 @@ class Usin(object):
         self.aftertomorrow.setGeometry(QtCore.QRect(160, 310, 131, 31))
         self.afteraftertomorrow = QtWidgets.QPushButton('Послепослезавтра', window)
         self.afteraftertomorrow.setGeometry(QtCore.QRect(300, 310, 131, 31))
-        self.more = QtWidgets.QPushButton('Подробнее', window)
+        self.more = QtWidgets.QPushButton('На неделю', window)
         self.more.setGeometry(QtCore.QRect(160, 350, 131, 31))
         self.change_city = QtWidgets.QPushButton(u'\u21cc', window)
 
@@ -116,4 +118,3 @@ class Usin(object):
 
         self.gridLayout_more = QtWidgets.QGridLayout(self.layoutWidget_more)
         self.gridLayout_more.setContentsMargins(0, 0, 0, 0)
-
